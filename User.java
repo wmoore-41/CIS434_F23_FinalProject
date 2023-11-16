@@ -1,20 +1,24 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 public class User {
     final String username;
     String password; // Not secure, but works for the purposes of this project.
-    int numActiveTickets;
 
 
     public User(String username, String password){
         this.username = username;
         this.password = password;
-        this.numActiveTickets = 0;
     }
 
 
 
     // search for a ticket based on ID
     Ticket searchTickets(int ticketID){
-        for (Ticket t: HRAgent.allTickets){
+        List<Ticket> all = new ArrayList<>(HRAgent.openTickets);
+        all.addAll(HRAgent.closedTickets);
+        for (Ticket t: all){
             if(t.ticketID == ticketID){
                 return t;
             }

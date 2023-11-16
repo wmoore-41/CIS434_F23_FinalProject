@@ -5,9 +5,11 @@ public class HRAgent {
     // Can create profiles
     //
 
-    String username;
+    final String username;
     private String password;
     static List<Agent> allAgents;
+    static List<Ticket> openTickets;
+    static List<Ticket> closedTickets;
 
 
     // Default constructor
@@ -31,7 +33,7 @@ public class HRAgent {
     static void helpRequestListener(Ticket ticket){
         // add random agent from allAgents where agent is not in ticket.assignedAgents
         for (Agent a: allAgents) {
-            if (!ticket.assignedAgents.contains(a)){    // if agent a is not an already assigned agent on this ticket, add him
+            if (!ticket.assignedAgents.contains(a)){    // if agent is not an already assigned agent on this ticket, add them
                 assignTicketToAgent(ticket, a);
             }
         }

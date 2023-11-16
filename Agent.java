@@ -6,14 +6,14 @@ public class Agent {
     // Can close tickets
     // Can request help from HR (HR will then assign another agent to ticket)
     // Can be assigned multiple tickets
-    String username;
+    final String username;
     private String password;
     List<Ticket> assignedTickets;
 
-    public Agent(String username, String pw){
+    public Agent(String username, String password){
         this.username = username;
-        this.password = pw;
-        this.assignedTickets = new ArrayList<Ticket>(5);
+        this.password = password;
+        this.assignedTickets = new ArrayList<Ticket>();
     }
 
 
@@ -24,6 +24,7 @@ public class Agent {
         ticket.close();
     }
 
+    // Search for a ticket based on Ticket ID
     Ticket searchTicket(int ticketID){
         for (Ticket t: this.assignedTickets) {
             if (ticketID == t.ticketID){
@@ -34,6 +35,7 @@ public class Agent {
     }
 
     // Request Help on specific ticket
-
-
+    void requestHelp(Ticket ticket){
+        HRAgent.helpRequestListener(ticket);
+    }
 }

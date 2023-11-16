@@ -18,8 +18,8 @@ public class Ticket {
         OTHER
     }
     List<Agent> assignedAgents;
-    int ticketID;
-    User requester;
+    final int ticketID;
+    final User requester;
     String title;
     String description;
     Priority priority;
@@ -31,19 +31,21 @@ public class Ticket {
     public Ticket(User requester, String title, String description, Priority priority, Category category){
         this.requester = requester;
         Random r = new Random();
-        this.ticketID = r.nextInt(1000, 9999);
+        this.ticketID = r.nextInt(1000, 10000);
         this.title = title;
         this.description = description;
         this.priority = priority;
         this.category = category;
         this.dueDate = LocalDateTime.now().plusDays(3);
         this.isOpen = true;
-
+        HRAgent.openTickets.add(this);
     }
 
 
     void close(){
         this.isOpen = false;
+        HRAgent.openTickets.remove(this);
+        HRAgent.closedTickets.add(this);
     }
 
 }
