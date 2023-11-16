@@ -17,23 +17,22 @@ public class HRAgent {
     }
 
     // Assign Ticket to Agent
-    void assignTickettoAgent(Ticket ticket, Agent agent){
+    static void assignTicketToAgent(Ticket ticket, Agent agent){
         ticket.assignedAgents.add(agent);
         agent.assignedTickets.add(ticket);
     }
 
-    void removeTicketfromAgent(Ticket ticket, Agent agent){
+    void removeTicketFromAgent(Ticket ticket, Agent agent){
         ticket.assignedAgents.remove(agent);
         agent.assignedTickets.remove(ticket);
     }
 
 
-    void helpRequestListener(Ticket ticket){
-        // add random agent from allagents where agent is not in ticket.assignedAgents
-        for (Agent a:
-                allAgents) {
-            if (!ticket.assignedAgents.contains(a)){
-                assignTickettoAgent(ticket, a);
+    static void helpRequestListener(Ticket ticket){
+        // add random agent from allAgents where agent is not in ticket.assignedAgents
+        for (Agent a: allAgents) {
+            if (!ticket.assignedAgents.contains(a)){    // if agent a is not an already assigned agent on this ticket, add him
+                assignTicketToAgent(ticket, a);
             }
         }
     }
