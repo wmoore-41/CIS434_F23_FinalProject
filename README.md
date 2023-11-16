@@ -1,10 +1,10 @@
 # CIS434_F23_FinalProject
-Final project for CIS434 Fall '23
-Team Member:
-Weiland Moore
-Gina Bonar
-Gretta Foxx
-Darshan Thakkar
+
+### Team Members:
+* Weiland Moore
+* Gina Bonar
+* Gretta Foxx
+* Darshan Thakkar
 
 ## Description
 Support Ticketing System built for CIS434 final project.
@@ -22,3 +22,4 @@ Support Ticketing System built for CIS434 final project.
 * Agents can only respond to and search through tickets they're tied to
 * An agent can share tickets with other agents
 * Separate GUIs for users and agents
+* 
