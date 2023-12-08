@@ -17,7 +17,7 @@ public class User {
 
 
 
-    // search for a ticket based on ID
+    // search for all tickets (open and closed) based on ID
     Ticket searchTickets(int ticketID){
         List<Ticket> all = new ArrayList<>(HRAgent.openTickets);
         all.addAll(HRAgent.closedTickets);
@@ -36,6 +36,7 @@ public class User {
         return new Ticket(this, title, description);
     }
 
+    // prints all open tickets for the user, to the console
     void printAvailableTickets(){
         for (Ticket t : requestedTickets) {
             System.out.println(t);
