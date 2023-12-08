@@ -3,21 +3,9 @@ import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-enum Priority {
-    LOW,
-    MEDIUM,
-    HIGH
-}
-
-
-
 public class Ticket {
-    enum Category {
-        GENERAL,
-        SPECIAL,
-        OTHER
-    }
+    enum Priority {LOW, MEDIUM, HIGH}
+    enum Category {GENERAL, SPECIAL, OTHER}
     List<Agent> assignedAgents;
     final int ticketID;
     final User requester;
@@ -29,15 +17,15 @@ public class Ticket {
     boolean isOpen;
 
     // Default constructor for Ticket instances
-    public Ticket(User requester, String title, String description, Priority priority, Category category){
+    public Ticket(User requester, String title, String description){
         this.requester = requester;
-        Random r = new Random();
-        this.ticketID = r.nextInt(1000, 10000);
+        requester.requestedTickets.add(this);
+        this.ticketID = new Random().nextInt(1000, 10000); // random four-digit number
         this.title = title;
         this.description = description;
-        this.priority = priority;
-        this.category = category;
-        this.dueDate = LocalDateTime.now().plusDays(3);
+        this.priority = Priority.LOW; // default low priority unless changed
+        this.category = Category.GENERAL; // default general category unless changed
+        this.dueDate = LocalDateTime.now().plusDays(3); // default deadline of 3 days
         this.assignedAgents = new ArrayList<Agent>();
         this.isOpen = true;
     }
@@ -45,7 +33,7 @@ public class Ticket {
 
     void close(){
         this.isOpen = false;
-        // Remove the ticket from any agents' assigned tickets, then remove all assigned agents from it
+        // Remove the ticket from all agents' assigned tickets, then remove all assigned agents from it
         for (Agent a :assignedAgents) {
             a.assignedTickets.remove(this);
         }
@@ -62,6 +50,7 @@ public class Ticket {
         res.append("Requested by User: ").append(this.requester.username).append("\n");
         res.append("Assigned Agents: ").append(this.assignedAgents).append("\n");
         res.append("Due By: ").append(this.dueDate).append("\n");
+        res.append("Priority: ").append(this.category).append(", Category: ").append(this.category).append("\n");
         return res.toString();
     }
 }

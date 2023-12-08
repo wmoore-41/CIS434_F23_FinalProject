@@ -25,15 +25,15 @@ public class Constants {
 
     static void generateTickets(){
         int index = IntStream.range(0, defaultUsers.size()).filter(i -> defaultUsers.get(i).username.equals("User1")).findFirst().orElse(-1);
-        defaultTickets.add(new Ticket(defaultUsers.get(index), "I don't like this program.", "This is difficult to write.", Priority.HIGH, Ticket.Category.GENERAL));
+        defaultTickets.add(new Ticket(defaultUsers.get(index), "I don't like this program.", "This is difficult to write."));
         index = IntStream.range(0, defaultUsers.size()).filter(i -> defaultUsers.get(i).username.equals("User2")).findFirst().orElse(-1);
-        defaultTickets.add(new Ticket(defaultUsers.get(index), "I need help with this program.", "I can't get this thing to work.", Priority.LOW, Ticket.Category.GENERAL));
+        defaultTickets.add(new Ticket(defaultUsers.get(index), "I need help with this program.", "I can't get this thing to work."));
         index = IntStream.range(0, defaultUsers.size()).filter(i -> defaultUsers.get(i).username.equals("User3")).findFirst().orElse(-1);
-        defaultTickets.add(new Ticket(defaultUsers.get(index), "Very vague title.", "I just want to know how to randomly generate data.", Priority.LOW, Ticket.Category.SPECIAL));
+        defaultTickets.add(new Ticket(defaultUsers.get(index), "Very vague title.", "I just want to know how to randomly generate data."));
         index = IntStream.range(0, defaultUsers.size()).filter(i -> defaultUsers.get(i).username.equals("User4")).findFirst().orElse(-1);
-        defaultTickets.add(new Ticket(defaultUsers.get(index), "Extremely descriptive title.", "I would like to know if there's an easier way to do this.", Priority.MEDIUM, Ticket.Category.SPECIAL));
+        defaultTickets.add(new Ticket(defaultUsers.get(index), "Extremely descriptive title.", "I would like to know if there's an easier way to do this."));
         index = IntStream.range(0, defaultUsers.size()).filter(i -> defaultUsers.get(i).username.equals("User5")).findFirst().orElse(-1);
-        defaultTickets.add(new Ticket(defaultUsers.get(index), "What is the standard Lorem Ipsum text?", "Lorem Ipsum description.", Priority.HIGH, Ticket.Category.OTHER));
+        defaultTickets.add(new Ticket(defaultUsers.get(index), "What is the standard Lorem Ipsum text?", "Lorem Ipsum description."));
     }
 
     static void assignDefaultTickets(Agent agent){

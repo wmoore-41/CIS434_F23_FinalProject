@@ -31,15 +31,14 @@ public class User {
 
 
 
-    // creates and returns a Ticket object given title, description, priority and a category
-    Ticket createTicket(String title, String description, Priority priority, Ticket.Category category){
-        return new Ticket(this, title, description, priority, category);
+    // creates and returns a Ticket object given a title and a description
+    Ticket createTicket(String title, String description){
+        return new Ticket(this, title, description);
     }
 
     void printAvailableTickets(){
-        for (Ticket t :
-                requestedTickets) {
-            System.out.println("\n" + t.ticketID + ": " + t.title);
+        for (Ticket t : requestedTickets) {
+            System.out.println(t);
         }
     }
 
