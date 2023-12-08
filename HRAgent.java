@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 public class HRAgent{
     // Can assign/remove tickets to other agents
@@ -15,6 +16,14 @@ public class HRAgent{
     public HRAgent(String username, String password){
         this.username = username;
         this.password = password;
+        allAgents = new ArrayList<>();
+        openTickets = new ArrayList<>();
+        closedTickets = new ArrayList<>();
+    }
+
+    // HRAgent creates Agent profiles
+    Agent createAgent(String username, String password){
+        return new Agent(username, password);
     }
 
     // Assign Ticket to Agent
