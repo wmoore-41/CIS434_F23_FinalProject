@@ -1,15 +1,14 @@
 import java.util.List;
-public class HRAgent {
+public class HRAgent{
     // Can assign/remove tickets to other agents
     // Can't work on tickets
     // Can create profiles
     //
-
-    final String username;
-    private String password;
     static List<Agent> allAgents;
     static List<Ticket> openTickets;
     static List<Ticket> closedTickets;
+    final String username;
+    private String password;
 
 
     // Default constructor
@@ -38,7 +37,6 @@ public class HRAgent {
             }
         }
     }
-
 
 
 }

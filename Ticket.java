@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -37,15 +38,18 @@ public class Ticket {
         this.priority = priority;
         this.category = category;
         this.dueDate = LocalDateTime.now().plusDays(3);
+        this.assignedAgents = new ArrayList<Agent>();
         this.isOpen = true;
-        HRAgent.openTickets.add(this);
     }
 
 
     void close(){
         this.isOpen = false;
-        HRAgent.openTickets.remove(this);
-        HRAgent.closedTickets.add(this);
+        // Remove the ticket from any agents' assigned tickets, then remove all assigned agents from it
+        for (Agent a :assignedAgents) {
+            a.assignedTickets.remove(this);
+        }
+        assignedAgents.clear();
     }
 
 }
