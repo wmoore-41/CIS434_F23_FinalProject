@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class User {
     final String username;
     String password; // Not secure, but works for the purposes of this project.
     List<Ticket> requestedTickets;
-
+    Ticket currentTicket;
 
     public User(String username, String password){
         this.username = username;
@@ -15,21 +16,15 @@ public class User {
         this.requestedTickets = new ArrayList<Ticket>();
     }
 
-
-
     // search for all tickets (open and closed) based on ID
     Ticket searchTickets(int ticketID){
-        List<Ticket> all = new ArrayList<>(HRAgent.openTickets);
-        all.addAll(HRAgent.closedTickets);
-        for (Ticket t: all){
-            if(t.ticketID == ticketID){
+        for (Ticket t: this.requestedTickets) {
+            if (ticketID == t.ticketID){
                 return t;
             }
         }
         return null;
     }
-
-
 
     // creates and returns a Ticket object given a title and a description
     Ticket createTicket(String title, String description){
@@ -38,29 +33,113 @@ public class User {
 
     // prints all open tickets for the user, to the console
     void printAvailableTickets(){
-        for (Ticket t : requestedTickets) {
-            System.out.println(t);
+        for (Ticket t :
+                requestedTickets) {
+            System.out.println( + t.ticketID + ": " + t.title);
         }
     }
 
-    void userMenuHandler(Ticket selectedTicket) {
-        System.out.println(
-                "1) View Available Tickets\n" +
-                        "2) Open a New Ticket\n" +
-                        "3) Log Out"
-        );
+    // Changes currently viewed ticket. If unable to find one, notifies user.
+    void changeCurrentTicket(){
         Scanner input = new Scanner(System.in);
-        while (input.hasNextInt()) {
+        int attemptTicketID;
+        System.out.println("\nPlease select an new ticket:");
+        if (input.hasNextInt()){
+            attemptTicketID = input.nextInt();
+            if (requestedTickets.contains(searchTickets(attemptTicketID))){
+                int index = IntStream.range(0, requestedTickets.size()).filter(i -> requestedTickets.get(i).ticketID == attemptTicketID).findFirst().orElse(-1);
+                currentTicket = requestedTickets.get(index);
+            }
+            else{
+                System.out.println("\nCould not find a ticket with the requested ID.");
+            }
+        }
+    }
+
+    // User menu dialog
+    void userMenuHandler(Ticket selectedTicket) {
+        if (selectedTicket != null){
+            System.out.println(
+                    "\nCurrently Selected Ticket: " +
+                            selectedTicket.ticketID +
+                            "\n1) View Available Tickets" +
+                            "\n2) Change Current Ticket" +
+                            "\n3) View Current Ticket Details" +
+                            "\n4) Open a New Ticket" +
+                            "\n5) Log Out"
+            );
+        }
+        else{
+            System.out.println(
+                    "\nCurrently Selected Ticket: none" +
+                            "\n1) View Available Tickets" +
+                            "\n2) Change Current Ticket" +
+                            "\n3) View Current Ticket Details" +
+                            "\n4) Open a New Ticket" +
+                            "\n5) Log Out"
+            );
+        }
+        Scanner input = new Scanner(System.in);
+        if (input.hasNextInt()) {
             switch (input.nextInt()) {
                 case 1:
                     if (!requestedTickets.isEmpty()) {
                         printAvailableTickets();
                     }
+                    else{
+                        System.out.println("\nYou have not requested any tickets!");
+                    }
                     break;
                 case 2:
-                    // Add new ticket creation
+                    if (!requestedTickets.isEmpty()){
+                        changeCurrentTicket();
+                    }
+                    else {
+                        System.out.println("\nThere are no support tickets available. Consider creating a new ticket.");
+                    }
                     break;
                 case 3:
+                    if (currentTicket != null){
+                        System.out.println(currentTicket);
+                    }
+                    else{
+                        System.out.println("\nThere is no currently selected ticket.");
+                    }
+                    break;
+                case 4:
+                    Scanner newTicketInput = new Scanner(System.in);
+                    String newTicketTitle;
+                    String newTicketDescription;
+                    // Ticket title loop
+                    System.out.println("\nTitle your ticket: ");
+                    while(true){
+                        if (newTicketInput.hasNextLine()){
+                            newTicketTitle = newTicketInput.nextLine();
+                            break;
+                        }
+                        else{
+                            System.out.println("Please enter a title!");
+                        }
+                    }
+                    // Ticket description loop
+                    System.out.println("\nGive a description of the problem you're having: ");
+                    while(true){
+                        if (newTicketInput.hasNextLine()){
+                            newTicketDescription = newTicketInput.nextLine();
+                            break;
+                        }
+                        else{
+                            System.out.println("Please enter a description!");
+                        }
+                    }
+                    if ((newTicketTitle != null) && (newTicketDescription != null)){
+                        Ticket newTicket = createTicket(newTicketTitle, newTicketDescription); // Creates ticket and adds it to user's tickets
+                    }
+                    else{
+                        System.out.println("There was an error creating your new ticket.");
+                    }
+                    break;
+                case 5:
                     logOut();
                 default:
                     System.out.println("\nInvalid menu option - please input an available integer.");

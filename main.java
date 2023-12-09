@@ -19,32 +19,27 @@ public class main {
 
         Scanner loginInput = new Scanner(System.in);
         //LoginGUI LoginWindow = new LoginGUI();
-
-
-        System.out.println("\nEnter your username:");
-        username = loginInput.nextLine();
-        System.out.println("\nEnter your password:");
-        password = loginInput.nextLine();
-        // This whole section is a) not secure and b) not how it would be implemented real world
-        if (logIn(username, password)){
-            if (username.equals(Constants.defaultUserLogin[0])){
-                // Run user session
-                UserSession(defaultUser);
-            } else if (username.equals(Constants.defaultAgentLogin[0])) {
-                // Run agent session
-                AgentSession(defaultAgent);
+        while(true){
+            System.out.println("\nEnter your username:");
+            username = loginInput.nextLine();
+            System.out.println("\nEnter your password:");
+            password = loginInput.nextLine();
+            // This whole section is a) not secure and b) not how it would be implemented real world
+            if (logIn(username, password)){
+                if (username.equals(Constants.defaultUserLogin[0])){
+                    // Run user session
+                    UserSession(defaultUser);
+                } else if (username.equals(Constants.defaultAgentLogin[0])) {
+                    // Run agent session
+                    AgentSession(defaultAgent);
+                }
+            }
+            else {
+                System.out.println("You have entered an incorrect username or password. Please retry.");
             }
         }
-        else {
-            JOptionPane messagePopup = new JOptionPane();
-            messagePopup.createDialog("Invalid Login!");
-            messagePopup.setMessage("You have entered an incorrect username or password. Please retry.");
-        }
+
     }
-
-
-
-
 
     public static boolean logIn(String username, String password){
         if (username.equals(Constants.defaultUserLogin[0])){
@@ -58,12 +53,27 @@ public class main {
     public static void UserSession(User user){
         //UserGUI UserSessionWindow = new UserGUI();
         System.out.println("\nWelcome, " + user.username + "!");
+        do {
+            // Will run the menu until the user logs out
+            if (user.currentTicket != null){
+                if (user.currentTicket.isOpen){
+                    user.userMenuHandler(user.currentTicket);
+                }
+                else{
+                    user.userMenuHandler(null);
+                }
+            }
+            else {
+                user.userMenuHandler(null);
+            }
+        }while(true);
 
     }
     public static void AgentSession(Agent agent){
         //AgentGUI AgentSessionWindow = new AgentGUI();
         System.out.println("\nWelcome, " + agent.username + "!");
         do{
+            // Will run the menu until the agent logs out
             if (agent.currentTicket != null){
                 if (agent.currentTicket.isOpen){
                     agent.agentMenuHandler(agent.currentTicket);

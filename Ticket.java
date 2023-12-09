@@ -48,9 +48,14 @@ public class Ticket {
         res.append("Title: ").append(this.title).append("\n");
         res.append("Description: ").append(this.description).append("\n");
         res.append("Requested by User: ").append(this.requester.username).append("\n");
-        res.append("Assigned Agents: ").append(this.assignedAgents).append("\n");
+        res.append("Assigned Agents: "); // Agents block
+        for (Agent a :
+                this.assignedAgents) {
+            res.append(a.username).append(" ");
+        }
+        res.append("\n");
         res.append("Due By: ").append(this.dueDate).append("\n");
-        res.append("Priority: ").append(this.category).append(", Category: ").append(this.category).append("\n");
+        res.append("Priority: ").append(this.priority).append(", Category: ").append(this.category).append("\n");
         return res.toString();
     }
 }

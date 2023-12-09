@@ -49,16 +49,18 @@ public class Agent {
                             "\n1) Change Selected Ticket" +
                             "\n2) Resolve Ticket" +
                             "\n3) View Available Tickets" +
-                            "\n4) Log Out"
+                            "\n4) View Info on Current Ticket" +
+                            "\n5) Log Out"
             );
         }
         else{
             System.out.println(
-                    "Currently Selected Ticket: none" +
+                    "\nCurrently Selected Ticket: none" +
                             "\n1) Change Selected Ticket" +
                             "\n2) Resolve Ticket" +
                             "\n3) View Available Tickets" +
-                            "\n4) Log Out"
+                            "\n4) View Info on Current Ticket" +
+                            "\n5) Log Out"
             );
         }
         Scanner input = new Scanner(System.in);
@@ -73,6 +75,9 @@ public class Agent {
                         closeTicket(currentTicket);
                         System.out.println("\nTicket # " + selectedTicket.ticketID + " closed.");
                     }
+                    else{
+                        System.out.println("\nThere is no currently selected ticket. Please select a ticket, then close it.");
+                    }
                     break;
                 case 3:
                     if (!assignedTickets.isEmpty()){
@@ -83,6 +88,14 @@ public class Agent {
                     }
                     break;
                 case 4:
+                    if (currentTicket != null){
+                        System.out.println(currentTicket);
+                    }
+                    else{
+                        System.out.println("\nThere is no currently selected ticket.");
+                    }
+                    break;
+                case 5:
                     logOut(); // Exits program
                 default:
                     System.out.println("\nInvalid menu option - please input an available integer.");
